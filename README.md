@@ -1,5 +1,8 @@
 # CryptoDashboard
 
+This is code for a tutorial I am writing for [dunebook.com](https://dunebook.com). Article not complete and not published
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
 
 ## Development server
