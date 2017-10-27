@@ -1,3 +1,12 @@
-<p>
-  list-card works!
-</p>
+<div class="card text-center mt-4">
+	<div class="card-body">
+		<h4 class="card-title">{{ coin.id }}</h4>
+		<h6 class="mb-0 pb-1">{{ coin.price_usd }}</h6>
+	</div>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">24 hours: {{
+			coin.percent_change_24h }}</li>
+		<li class="list-group-item">7 days: {{
+			coin.percent_change_7d }}</li>
+	</ul>
+</div>

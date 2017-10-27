@@ -1,6 +1,3 @@
-<div *ngFor="let coin of coins" class="mb3">
-	{{ coin.id }}<br>
-	{{ coin.price_usd }}<br>
-	% change 24 hours: {{ coin.percent_change_24h }} <br>
-	% change 7 days: {{ coin.percent_change_7d }}<br>
+<div class="list-cards pb-4">
+	<app-list-card *ngFor="let coin of coins" [coin]="coin"></app-list-card>
 </div>

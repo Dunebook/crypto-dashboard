@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Coin} from '../coin';
 
 @Component({
@@ -7,10 +7,10 @@ import {Coin} from '../coin';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  @Input() coins: Coin;
+  @Input() coins: Coin[];
   @Input() selectedCurrency: string;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
   }
