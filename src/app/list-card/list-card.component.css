@@ -16,3 +16,11 @@ ul.list-group {
 .list-group-item:first-child {
 	border-radius: 0;
 }
+
+.green{
+	color: #7CB159;
+}
+
+.red {
+	color: #EA1010;
+}

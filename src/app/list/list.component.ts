@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {AppService} from '../app.service';
 import {Coin} from '../coin';
 
 @Component({
@@ -7,11 +8,27 @@ import {Coin} from '../coin';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  @Input() coins: Coin[];
-  @Input() selectedCurrency: string;
+  coins: Coin[];
+  noDataMsg: string;
+  fiat: string;
 
-  constructor() {}
+  constructor(private appService: AppService) {
+    this.noDataMsg = 'Select fiat currency to get started';
+    this.appService.filteredCoinsSubject.subscribe({
+      next: (v) => this.updateCoins(v),
+    });
+    this.appService.apiSubject.subscribe({
+      next: (msg) => this.noDataMsg = msg,
+    });
+    this.appService.fiatSubject.subscribe({
+      next: (newValue) => this.fiat = newValue,
+    });
+  }
 
+  updateCoins(coins: Coin[]) {
+    this.coins = [];
+    coins.forEach((coin) => this.coins.push(coin));
+  }
   ngOnInit() {
   }
 

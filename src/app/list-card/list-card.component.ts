@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-list-card',
@@ -7,7 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ListCardComponent implements OnInit {
   @Input() coin;
-  constructor() { }
+  @Input() fiat;
+  constructor() {}
 
   ngOnInit() {
   }

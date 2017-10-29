@@ -1,14 +1,14 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {cryptoCurrencies} from '../localdata';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AppService} from '../app.service';
 import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector: 'app-search-filter',
   templateUrl: './search-filter.component.html',
-  styleUrls: ['./search-filter.component.css']
+  styleUrls: ['./search-filter.component.css'],
+  providers: []
 })
 export class SearchFilterComponent implements OnInit {
-  @Output() onSelectCurrency = new EventEmitter<string>();
   currencies: string[];
   cryptoCurrOptions: IMultiSelectOption[];
   selectedCurrency: string;
@@ -32,15 +32,16 @@ export class SearchFilterComponent implements OnInit {
     searchPlaceholder: 'Find',
     searchEmptyResult: 'Nothing found...',
     searchNoRenderText: 'Type in search box to see results...',
-    defaultTitle: 'Select cryptos',
+    defaultTitle: 'Filter cryptos',
     allSelected: 'All selected',
   };
 
-  constructor() {
-    this.currencies = ['usd'];
-    this.selectedCurrency = 'usd'; // Set default selected currency
-    this.cryptoCurrOptions = cryptoCurrencies.map(function(elem, index) {
-      return {id: index, name: elem};
+  constructor(private appService: AppService) {
+    this.currencies = ['usd', 'eur'];
+    this.selectedCurrency = '';
+    this.cryptoCurrOptions = [];
+    this.appService.coinsSubject.subscribe({
+      next: (v) => this.updateCryptoOptions(v),
     });
   }
 
@@ -48,10 +49,21 @@ export class SearchFilterComponent implements OnInit {
   }
 
   selectCurrency(newValue) {
-    this.onSelectCurrency.emit(newValue);
+    this.appService.loadMarketCaps(newValue);
   }
 
-  onChange() {
-    console.log(this.optionsModel);
+  filterChange(newValue) {
+    // BUG method should not be triggered by filter select
+    this.appService.updateFilter(newValue);
+  }
+
+  updateCryptoOptions(coins) {
+    this.cryptoCurrOptions = [];
+    coins.forEach((coin, index) => {
+      this.cryptoCurrOptions.push({
+        id: index,
+        name: coin.id.charAt(0).toUpperCase() + coin.id.slice(1)
+      });
+    });
   }
 }
